@@ -1,0 +1,205 @@
+<form [formGroup]="myEmployeeEditingForm" (ngSubmit)="onSaveEmployeeForm()">
+  <p-card class="employee-edit-card">
+  <ng-template #header>
+    <div class="employee-edit-header">
+      <div>
+        <h2>Edit employee</h2>
+        @if (employeesData(); as employee) {
+          <p>{{ employee.firstName }} {{ employee.lastName }} · {{ employee.employeeCode }}</p>
+        }
+      </div>
+      <p-button
+        type="submit"
+        label="Save changes"
+        icon="pi pi-check"
+        severity="success"
+      />
+    </div>
+  </ng-template>
+
+  @if (employeesData(); as employee) {
+    <p-tabs value="personal" [scrollable]="true">
+      <p-tablist aria-label="Employee edit sections">
+        <p-tab value="personal">Personal</p-tab>
+        <p-tab value="contact">Contact</p-tab>
+        <p-tab value="employment">Employment</p-tab>
+        <p-tab value="compensation">Compensation &amp; Banking</p-tab>
+        <p-tab value="education">Education</p-tab>
+        <p-tab value="emergency">Emergency contact</p-tab>
+        <p-tab value="record">Record</p-tab>
+      </p-tablist>
+
+      <p-tabpanels>
+        <p-tabpanel value="personal">
+          <div class="employee-edit-fields">
+            <div class="employee-edit-field">
+              <label for="edit-first-name">First name</label>
+              <input pInputText id="edit-first-name" [value]="employee.firstName" formControlName="firstName" appFocus/>
+            </div>
+            <div class="employee-edit-field">
+              <label for="edit-last-name">Last name</label>
+              <input pInputText id="edit-last-name" [value]="employee.lastName" formControlName="lastName"/>
+            </div>
+            <div class="employee-edit-field">
+              <label for="edit-date-of-birth">Date of birth</label>
+              <input pInputText id="edit-date-of-birth" type="date" [value]="employee.dateOfBirth ?? ''" formControlName="dateOfBirth"/>
+            </div>
+            <div class="employee-edit-field">
+              <label for="edit-gender">Gender</label>
+              <input pInputText id="edit-gender" [value]="employee.gender ?? ''" formControlName="gender"/>
+            </div>
+            <div class="employee-edit-field">
+              <label for="edit-profile-image">Profile image URL</label>
+              <input pInputText id="edit-profile-image" [value]="employee.profileImage" formControlName="profileImage"/>
+            </div>
+            <div class="employee-edit-field">
+              <label for="edit-status">Status</label>
+              <input pInputText id="edit-status" [value]="employee.isActive ? 'Active' : 'Inactive'" formControlName="isActive"/>
+            </div>
+          </div>
+        </p-tabpanel>
+
+        <p-tabpanel value="contact">
+          <div class="employee-edit-fields">
+            <div class="employee-edit-field">
+              <label for="edit-email">Email</label>
+              <input pInputText id="edit-email" type="email" [value]="employee.email" formControlName="email"/>
+            </div>
+            <div class="employee-edit-field">
+              <label for="edit-mobile">Mobile number</label>
+              <input pInputText id="edit-mobile" type="tel" [value]="employee.mobileNumber" formControlName="mobileNumber"/>
+            </div>
+            <div class="employee-edit-field">
+              <label for="edit-alternate-mobile">Alternate mobile number</label>
+              <input pInputText id="edit-alternate-mobile" type="tel" [value]="employee.alternateMobileNumber ?? ''" formControlName="alternateMobileNumber"/>
+            </div>
+            <div class="employee-edit-field">
+              <label for="edit-address">Address</label>
+              <input pInputText id="edit-address" [value]="employee.address ?? ''" formControlName="address"/>
+            </div>
+            <div class="employee-edit-field">
+              <label for="edit-city">City</label>
+              <input pInputText id="edit-city" [value]="employee.city ?? ''" formControlName="city"/>
+            </div>
+            <div class="employee-edit-field">
+              <label for="edit-state">State</label>
+              <input pInputText id="edit-state" [value]="employee.state ?? ''" formControlName="state"/>
+            </div>
+            <div class="employee-edit-field">
+              <label for="edit-country">Country</label>
+              <input pInputText id="edit-country" [value]="employee.country ?? ''" formControlName="country"/>
+            </div>
+            <div class="employee-edit-field">
+              <label for="edit-pin-code">PIN code</label>
+              <input pInputText id="edit-pin-code" [value]="employee.pinCode ?? ''" formControlName="pinCode"/>
+            </div>
+          </div>
+        </p-tabpanel>
+
+        <p-tabpanel value="employment">
+          <div class="employee-edit-fields">
+            <div class="employee-edit-field">
+              <label for="edit-employee-code">Employee code</label>
+              <input pInputText id="edit-employee-code" [value]="employee.employeeCode" formControlName="employeeCode"/>
+            </div>
+            <div class="employee-edit-field">
+              <label for="edit-department">Department</label>
+              <input pInputText id="edit-department" [value]="employee.department" formControlName="department"/>
+            </div>
+            <div class="employee-edit-field">
+              <label for="edit-designation">Designation</label>
+              <input pInputText id="edit-designation" [value]="employee.designation" formControlName="designation"/>
+            </div>
+            <div class="employee-edit-field">
+              <label for="edit-employment-type">Employment type</label>
+              <input pInputText id="edit-employment-type" [value]="employee.employmentType ?? ''" formControlName="employmentType"/>
+            </div>
+            <div class="employee-edit-field">
+              <label for="edit-joining-date">Joining date</label>
+              <input pInputText id="edit-joining-date" type="date" [value]="employee.joiningDate ?? ''" formControlName="joiningDate"/>
+            </div>
+            <div class="employee-edit-field">
+              <label for="edit-experience">Experience (years)</label>
+              <input pInputText id="edit-experience" type="number" step="0.1" [value]="employee.experience ?? ''" formControlName="experience"/>
+            </div>
+            <div class="employee-edit-field">
+              <label for="edit-reporting-manager">Reporting manager</label>
+              <input pInputText id="edit-reporting-manager" [value]="employee.reportingManager ?? ''" formControlName="reportingManager"/>
+            </div>
+          </div>
+        </p-tabpanel>
+
+        <p-tabpanel value="compensation">
+          <div class="employee-edit-fields">
+            <div class="employee-edit-field">
+              <label for="edit-salary">Salary</label>
+              <input pInputText id="edit-salary" type="number" [value]="employee.salary ?? ''" formControlName="salary"/>
+            </div>
+            <div class="employee-edit-field">
+              <label for="edit-bank-account">Bank account number</label>
+              <input pInputText id="edit-bank-account" [value]="employee.bankAccountNumber ?? ''" formControlName="bankAccountNumber"/>
+            </div>
+            <div class="employee-edit-field">
+              <label for="edit-bank-name">Bank name</label>
+              <input pInputText id="edit-bank-name" [value]="employee.bankName ?? ''" formControlName="bankName"/>
+            </div>
+            <div class="employee-edit-field">
+              <label for="edit-ifsc">IFSC code</label>
+              <input pInputText id="edit-ifsc" [value]="employee.ifscCode ?? ''" formControlName="ifscCode"/>
+            </div>
+          </div>
+        </p-tabpanel>
+
+        <p-tabpanel value="education">
+          <div class="employee-edit-fields">
+            <div class="employee-edit-field">
+              <label for="edit-qualification">Qualification</label>
+              <input pInputText id="edit-qualification" [value]="employee.qualification ?? ''" formControlName="qualification"/>
+            </div>
+            <div class="employee-edit-field">
+              <label for="edit-university">University</label>
+              <input pInputText id="edit-university" [value]="employee.university ?? ''" formControlName="university"/>
+            </div>
+          </div>
+        </p-tabpanel>
+
+        <p-tabpanel value="emergency">
+          <div class="employee-edit-fields">
+            <div class="employee-edit-field">
+              <label for="edit-emergency-name">Contact name</label>
+              <input pInputText id="edit-emergency-name" [value]="employee.emergencyContactName ?? ''" formControlName="emergencyContactName"/>
+            </div>
+            <div class="employee-edit-field">
+              <label for="edit-emergency-number">Contact number</label>
+              <input pInputText id="edit-emergency-number" type="tel" [value]="employee.emergencyContactNumber ?? ''" formControlName="emergencyContactNumber"/>
+            </div>
+            <div class="employee-edit-field">
+              <label for="edit-emergency-relation">Relationship</label>
+              <input pInputText id="edit-emergency-relation" [value]="employee.emergencyContactRelation ?? ''" formControlName="emergencyContactRelation"/>
+            </div>
+          </div>
+        </p-tabpanel>
+
+        <p-tabpanel value="record">
+          <div class="employee-edit-fields">
+            <div class="employee-edit-field">
+              <label for="edit-record-id">Record ID</label>
+              <input pInputText id="edit-record-id" [value]="employee.id" formControlName="id"/>
+            </div>
+            <div class="employee-edit-field">
+              <label for="edit-created-at">Created at</label>
+              <input pInputText id="edit-created-at" [value]="employee.createdAt ?? ''" formControlName="createdAt"/>
+            </div>
+            <div class="employee-edit-field">
+              <label for="edit-updated-at">Updated at</label>
+              <input pInputText id="edit-updated-at" [value]="employee.updatedAt ?? ''" formControlName="updatedAt"/>
+            </div>
+          </div>
+        </p-tabpanel>
+      </p-tabpanels>
+    </p-tabs>
+  } @else {
+    <p class="employee-edit-empty">Select an employee to edit.</p>
+  }
+  </p-card>
+</form>

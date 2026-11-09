@@ -1,0 +1,119 @@
+<p-card class="employee-details-card">
+  <ng-template #header>
+    <div class="employee-details-header">
+      @if (employee()?.profileImage; as profileImage) {
+        <img
+          class="employee-profile-image"
+          [src]="profileImage"
+          [alt]="'Profile photo of ' + employeeName()"
+        />
+      }
+
+      <div class="employee-heading">
+        <h2>{{ employeeName() }}</h2>
+        @if (employee(); as employeeData) {
+          <p>{{ employeeData.employeeCode }} · {{ employeeData.designation }}</p>
+        }
+      </div>
+
+      @if (employee(); as employeeData) {
+        <p-tag
+          class="employee-status"
+          [value]="employeeData.isActive ? 'Active' : 'Inactive'"
+          [severity]="employeeData.isActive ? 'success' : 'danger'"
+        />
+      }
+    </div>
+  </ng-template>
+
+  <p-tabs value="personal" [scrollable]="true">
+    <p-tablist aria-label="Employee details sections">
+      <p-tab value="personal">Personal</p-tab>
+      <p-tab value="contact">Contact</p-tab>
+      <p-tab value="employment">Employment</p-tab>
+      <p-tab value="compensation">Compensation &amp; Banking</p-tab>
+      <p-tab value="education">Education</p-tab>
+      <p-tab value="emergency">Emergency contact</p-tab>
+      <p-tab value="record">Record</p-tab>
+    </p-tablist>
+
+    <p-tabpanels>
+      <p-tabpanel value="personal">
+        <div class="employee-fields">
+          @for (field of personalFields(); track field.label; let index = $index) {
+            <div class="employee-field">
+              <label [for]="'personal-field-' + index">{{ field.label }}</label>
+              <input pInputText [id]="'personal-field-' + index" [value]="field.value" readonly />
+            </div>
+          }
+        </div>
+      </p-tabpanel>
+
+      <p-tabpanel value="contact">
+        <div class="employee-fields">
+          @for (field of contactFields(); track field.label; let index = $index) {
+            <div class="employee-field">
+              <label [for]="'contact-field-' + index">{{ field.label }}</label>
+              <input pInputText [id]="'contact-field-' + index" [value]="field.value" readonly />
+            </div>
+          }
+        </div>
+      </p-tabpanel>
+
+      <p-tabpanel value="employment">
+        <div class="employee-fields">
+          @for (field of employmentFields(); track field.label; let index = $index) {
+            <div class="employee-field">
+              <label [for]="'employment-field-' + index">{{ field.label }}</label>
+              <input pInputText [id]="'employment-field-' + index" [value]="field.value" readonly />
+            </div>
+          }
+        </div>
+      </p-tabpanel>
+
+      <p-tabpanel value="compensation">
+        <div class="employee-fields">
+          @for (field of compensationFields(); track field.label; let index = $index) {
+            <div class="employee-field">
+              <label [for]="'compensation-field-' + index">{{ field.label }}</label>
+              <input pInputText [id]="'compensation-field-' + index" [value]="field.value" readonly />
+            </div>
+          }
+        </div>
+      </p-tabpanel>
+
+      <p-tabpanel value="education">
+        <div class="employee-fields">
+          @for (field of educationFields(); track field.label; let index = $index) {
+            <div class="employee-field">
+              <label [for]="'education-field-' + index">{{ field.label }}</label>
+              <input pInputText [id]="'education-field-' + index" [value]="field.value" readonly />
+            </div>
+          }
+        </div>
+      </p-tabpanel>
+
+      <p-tabpanel value="emergency">
+        <div class="employee-fields">
+          @for (field of emergencyContactFields(); track field.label; let index = $index) {
+            <div class="employee-field">
+              <label [for]="'emergency-field-' + index">{{ field.label }}</label>
+              <input pInputText [id]="'emergency-field-' + index" [value]="field.value" readonly />
+            </div>
+          }
+        </div>
+      </p-tabpanel>
+
+      <p-tabpanel value="record">
+        <div class="employee-fields">
+          @for (field of recordFields(); track field.label; let index = $index) {
+            <div class="employee-field">
+              <label [for]="'record-field-' + index">{{ field.label }}</label>
+              <input pInputText [id]="'record-field-' + index" [value]="field.value" readonly />
+            </div>
+          }
+        </div>
+      </p-tabpanel>
+    </p-tabpanels>
+  </p-tabs>
+</p-card>

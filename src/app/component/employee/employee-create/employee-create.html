@@ -1,0 +1,346 @@
+<form #createForm="ngForm" class="employee-create-form" (ngSubmit)="onSubmit(createForm)">
+  <div class="employee-create-content">
+    <section class="employee-create-section">
+      <h3>Personal information</h3>
+      <div class="employee-create-grid">
+        <div class="employee-create-field">
+          <label for="create-first-name">First name *</label>
+          <input
+            pInputText
+            id="create-first-name"
+            name="firstName"
+            [(ngModel)]="employeeForm.firstName"
+            required
+            autocomplete="given-name"
+            appFocus
+          />
+        </div>
+        <div class="employee-create-field">
+          <label for="create-last-name">Last name *</label>
+          <input
+            pInputText
+            id="create-last-name"
+            name="lastName"
+            [(ngModel)]="employeeForm.lastName"
+            required
+            autocomplete="family-name"
+          />
+        </div>
+        <div class="employee-create-field">
+          <label for="create-date-of-birth">Date of birth</label>
+          <input
+            pInputText
+            id="create-date-of-birth"
+            name="dateOfBirth"
+            type="date"
+            [(ngModel)]="employeeForm.dateOfBirth"
+          />
+        </div>
+        <div class="employee-create-field">
+          <label for="create-gender">Gender</label>
+          <p-select
+            inputId="create-gender"
+            name="gender"
+            [options]="genderOptions"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Select gender"
+            [showClear]="true"
+            [(ngModel)]="employeeForm.gender"
+          />
+        </div>
+        <div class="employee-create-field">
+          <label for="create-profile-image">Profile image URL</label>
+          <input
+            pInputText
+            id="create-profile-image"
+            name="profileImage"
+            type="url"
+            [(ngModel)]="employeeForm.profileImage"
+          />
+        </div>
+        <div class="employee-create-field">
+          <label for="create-status">Status</label>
+          <p-select
+            inputId="create-status"
+            name="isActive"
+            [options]="statusOptions"
+            optionLabel="label"
+            optionValue="value"
+            [(ngModel)]="employeeForm.isActive"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section class="employee-create-section">
+      <h3>Contact information</h3>
+      <div class="employee-create-grid">
+        <div class="employee-create-field">
+          <label for="create-email">Email *</label>
+          <input
+            pInputText
+            id="create-email"
+            name="email"
+            type="email"
+            [(ngModel)]="employeeForm.email"
+            required
+            autocomplete="email"
+          />
+        </div>
+        <div class="employee-create-field">
+          <label for="create-mobile">Mobile number *</label>
+          <input
+            pInputText
+            id="create-mobile"
+            name="mobileNumber"
+            type="tel"
+            [(ngModel)]="employeeForm.mobileNumber"
+            required
+            autocomplete="tel"
+          />
+        </div>
+        <div class="employee-create-field">
+          <label for="create-alternate-mobile">Alternate mobile number</label>
+          <input
+            pInputText
+            id="create-alternate-mobile"
+            name="alternateMobileNumber"
+            type="tel"
+            [(ngModel)]="employeeForm.alternateMobileNumber"
+          />
+        </div>
+        <div class="employee-create-field">
+          <label for="create-address">Address</label>
+          <input
+            pInputText
+            id="create-address"
+            name="address"
+            [(ngModel)]="employeeForm.address"
+            autocomplete="street-address"
+          />
+        </div>
+        <div class="employee-create-field">
+          <label for="create-city">City</label>
+          <input pInputText id="create-city" name="city" [(ngModel)]="employeeForm.city" />
+        </div>
+        <div class="employee-create-field">
+          <label for="create-state">State</label>
+          <input pInputText id="create-state" name="state" [(ngModel)]="employeeForm.state" />
+        </div>
+        <div class="employee-create-field">
+          <label for="create-country">Country</label>
+          <input pInputText id="create-country" name="country" [(ngModel)]="employeeForm.country" />
+        </div>
+        <div class="employee-create-field">
+          <label for="create-pin-code">PIN code</label>
+          <input
+            pInputText
+            id="create-pin-code"
+            name="pinCode"
+            [(ngModel)]="employeeForm.pinCode"
+            autocomplete="postal-code"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section class="employee-create-section">
+      <h3>Employment information</h3>
+      <div class="employee-create-grid">
+        <div class="employee-create-field">
+          <label for="create-employee-code">Employee code *</label>
+          <input
+            pInputText
+            id="create-employee-code"
+            name="employeeCode"
+            [(ngModel)]="employeeForm.employeeCode"
+            required
+          />
+        </div>
+        <div class="employee-create-field">
+          <label for="create-department">Department *</label>
+          <input
+            pInputText
+            id="create-department"
+            name="department"
+            [(ngModel)]="employeeForm.department"
+            required
+          />
+        </div>
+        <div class="employee-create-field">
+          <label for="create-designation">Designation *</label>
+          <input
+            pInputText
+            id="create-designation"
+            name="designation"
+            [(ngModel)]="employeeForm.designation"
+            required
+          />
+        </div>
+        <div class="employee-create-field">
+          <label for="create-employment-type">Employment type</label>
+          <p-select
+            inputId="create-employment-type"
+            name="employmentType"
+            [options]="employmentTypeOptions"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Select employment type"
+            [showClear]="true"
+            [(ngModel)]="employeeForm.employmentType"
+          />
+        </div>
+        <div class="employee-create-field">
+          <label for="create-joining-date">Joining date</label>
+          <input
+            pInputText
+            id="create-joining-date"
+            name="joiningDate"
+            type="date"
+            [(ngModel)]="employeeForm.joiningDate"
+          />
+        </div>
+        <div class="employee-create-field">
+          <label for="create-experience">Experience (years)</label>
+          <input
+            pInputText
+            id="create-experience"
+            name="experience"
+            type="number"
+            min="0"
+            step="0.1"
+            [(ngModel)]="employeeForm.experience"
+          />
+        </div>
+        <div class="employee-create-field">
+          <label for="create-reporting-manager">Reporting manager</label>
+          <input
+            pInputText
+            id="create-reporting-manager"
+            name="reportingManager"
+            [(ngModel)]="employeeForm.reportingManager"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section class="employee-create-section">
+      <h3>Compensation and banking</h3>
+      <div class="employee-create-grid">
+        <div class="employee-create-field">
+          <label for="create-salary">Salary</label>
+          <input
+            pInputText
+            id="create-salary"
+            name="salary"
+            type="number"
+            min="0"
+            [(ngModel)]="employeeForm.salary"
+          />
+        </div>
+        <div class="employee-create-field">
+          <label for="create-bank-account">Bank account number</label>
+          <input
+            pInputText
+            id="create-bank-account"
+            name="bankAccountNumber"
+            [(ngModel)]="employeeForm.bankAccountNumber"
+            autocomplete="off"
+          />
+        </div>
+        <div class="employee-create-field">
+          <label for="create-bank-name">Bank name</label>
+          <input
+            pInputText
+            id="create-bank-name"
+            name="bankName"
+            [(ngModel)]="employeeForm.bankName"
+          />
+        </div>
+        <div class="employee-create-field">
+          <label for="create-ifsc">IFSC code</label>
+          <input
+            pInputText
+            id="create-ifsc"
+            name="ifscCode"
+            [(ngModel)]="employeeForm.ifscCode"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section class="employee-create-section">
+      <h3>Education</h3>
+      <div class="employee-create-grid">
+        <div class="employee-create-field">
+          <label for="create-qualification">Qualification</label>
+          <input
+            pInputText
+            id="create-qualification"
+            name="qualification"
+            [(ngModel)]="employeeForm.qualification"
+          />
+        </div>
+        <div class="employee-create-field">
+          <label for="create-university">University</label>
+          <input
+            pInputText
+            id="create-university"
+            name="university"
+            [(ngModel)]="employeeForm.university"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section class="employee-create-section">
+      <h3>Emergency contact</h3>
+      <div class="employee-create-grid">
+        <div class="employee-create-field">
+          <label for="create-emergency-name">Contact name</label>
+          <input
+            pInputText
+            id="create-emergency-name"
+            name="emergencyContactName"
+            [(ngModel)]="employeeForm.emergencyContactName"
+          />
+        </div>
+        <div class="employee-create-field">
+          <label for="create-emergency-number">Contact number</label>
+          <input
+            pInputText
+            id="create-emergency-number"
+            name="emergencyContactNumber"
+            type="tel"
+            [(ngModel)]="employeeForm.emergencyContactNumber"
+          />
+        </div>
+        <div class="employee-create-field">
+          <label for="create-emergency-relation">Relationship</label>
+          <input
+            pInputText
+            id="create-emergency-relation"
+            name="emergencyContactRelation"
+            [(ngModel)]="employeeForm.emergencyContactRelation"
+          />
+        </div>
+      </div>
+    </section>
+  </div>
+
+  @if (errorMessage()) {
+    <p class="employee-create-error" role="alert">{{ errorMessage() }}</p>
+  }
+
+  <div class="employee-create-actions">
+    <p-button
+      type="submit"
+      label="Add employee"
+      icon="pi pi-check"
+      severity="success"
+      [loading]="isSaving()"
+      [disabled]="createForm.invalid || isSaving()"
+    />
+  </div>
+</form>

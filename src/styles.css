@@ -1,1 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.employee-select .p-select-label,
+.employee-select .employeeName,
+.employee-select-panel .employeeName,
+.employee-select-panel .p-select-option {
+  color: #fff !important;
+}
+
+.employee-select-panel {
+  background: #111827;
+}
+
+.employee-select-panel .employee-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: #fff;
+}
+
+.employee-select-panel .employee-option img {
+  flex: 0 0 2.25rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 50%;
+  object-fit: cover;
+}

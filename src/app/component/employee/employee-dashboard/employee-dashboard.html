@@ -1,0 +1,460 @@
+
+<div class="dashboard-page d-flex justify-content-center py-4">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12">
+
+        <p-card class="employee-card">
+
+          <!-- Dashboard Header -->
+          <ng-template #header>
+            <div class="dashboard-header d-flex justify-content-between align-items-center flex-wrap gap-3 p-3">
+
+              <h3 class="dashboard-title mb-0">
+                Employee Management
+              </h3>
+
+              <!-- Employee Counts -->
+              <div class="employee-counts d-flex flex-wrap gap-3">
+
+                <h5 class="mb-0">
+                  Total: {{ totalEmployeeCount() }}
+                </h5>
+
+                <h5 class="mb-0 text-success">
+                  Active: {{ activeEmployeeCount() }}
+                </h5>
+
+                <h5 class="mb-0 text-danger">
+                  Inactive: {{ inactiveEmployeeCount() }}
+                </h5>
+
+              </div>
+
+              <!-- Refresh and Add Employee -->
+              <div class="d-flex align-items-center gap-2">
+
+                <p-button
+                  icon="pi pi-refresh"
+                  severity="secondary"
+                  [outlined]="true"
+                  [rounded]="true"
+                  pTooltip="Refresh Employees"
+                  (onClick)="refreshEmployees()"
+                />
+
+                <p-button
+                  label="Add Employee"
+                  icon="pi pi-plus"
+                  severity="success"
+                  (onClick)="onEmployeeCreatingForms()"
+                />
+
+              </div>
+
+            </div>
+          </ng-template>
+
+          <!-- Employee Search and Filters -->
+          <div class="employee-filter-section mb-3">
+
+            <form [formGroup]="myEmployeeFilterForm">
+
+              <!-- First Row: Search Input and Button -->
+              <div class="row g-3 align-items-center mb-3">
+
+                <!-- Search Input: 8 Columns -->
+                <div class="col-12 col-sm-8">
+
+                  <input
+                    type="text"
+                    pInputText
+                    placeholder="Search Employee..."
+                    class="w-100"
+                    formControlName="searchName"
+                    appFocus
+                  />
+
+                </div>
+
+                <!-- Search Button: 4 Columns -->
+                <div class="col-12 col-sm-4">
+
+                  <p-button
+                    type="button"
+                    label="Charts"
+                    icon="pi pi-charts"
+                    severity="success"
+                    styleClass="w-100"
+                    (onClick)="onNavigateEmpListPage()"
+                  />
+
+                </div>
+
+              </div>
+
+              <!-- Second Row: All Filters in One Row -->
+              <div class="row g-3 align-items-center">
+
+                <!-- Department -->
+                <div class="col-12 col-sm-6 col-lg-3">
+
+                  <p-select
+                    class="w-100"
+                    [options]="employeeDepartementOptions()"
+                    optionLabel="label"
+                    optionValue="value"
+                    placeholder="Select Department"
+                    formControlName="department"
+                  />
+
+                </div>
+
+                <!-- Designation -->
+                <div class="col-12 col-sm-6 col-lg-3">
+
+                  <p-select
+                    class="w-100"
+                    [options]="employeeDesignationOptions()"
+                    optionLabel="label"
+                    optionValue="value"
+                    placeholder="Select Designation"
+                    formControlName="designation"
+                  />
+
+                </div>
+
+                <!-- Employee Status -->
+                <div class="col-12 col-sm-6 col-lg-3">
+
+                  <div class="employee-filter-status d-flex align-items-center justify-content-start gap-3">
+
+                    <div class="employee-filter-option d-flex align-items-center gap-2">
+
+                      <p-radiobutton
+                        name="isActive"
+                        [value]="true"
+                        inputId="isActiveTrue"
+                        formControlName="isActive"
+                      />
+
+                      <label for="isActiveTrue">
+                        Active
+                      </label>
+
+                    </div>
+
+                    <div class="employee-filter-option d-flex align-items-center gap-2">
+
+                      <p-radiobutton
+                        name="isActive"
+                        [value]="false"
+                        inputId="isActiveFalse"
+                        formControlName="isActive"
+                      />
+
+                      <label for="isActiveFalse">
+                        Inactive
+                      </label>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <!-- Show Columns -->
+                <div class="col-12 col-sm-6 col-lg-3">
+
+                  <p-multiSelect
+                    inputId="employee-table-columns"
+                    class="w-100"
+                    [options]="employeeTableColumns"
+                    optionLabel="header"
+                    placeholder="Show columns"
+                    display="chip"
+                    [filter]="true"
+                    [ngModel]="selectedEmployeeColumns()"
+                    [ngModelOptions]="{ standalone: true }"
+                    (ngModelChange)="selectedEmployeeColumns.set($event)"
+                  />
+
+                </div>
+
+              </div>
+
+            </form>
+
+          </div>
+
+          <!-- Employee Table -->
+          <div class="table-container d-flex justify-content-center">
+
+            <p-table
+              class="employee-table"
+              [paginator]="true"
+              [value]="employeesDetailsLists()"
+              [rows]="5"
+              [tableStyle]="{
+                'min-width': '50rem',
+                width: '100%'
+              }"
+            >
+
+              <!-- Table Header -->
+              <ng-template #header>
+
+                <tr>
+
+                  @for (column of visibleEmployeeColumns(); track column.field) {
+
+                    <th>
+                      {{ column.header }}
+                    </th>
+
+                  }
+
+                  <th>Action</th>
+
+                </tr>
+
+              </ng-template>
+
+              <!-- Table Body -->
+              <ng-template #body let-emp>
+
+                <tr>
+
+                  @for (column of visibleEmployeeColumns(); track column.field) {
+
+                    <td>
+
+                      <!-- Employee Profile Image -->
+                      @if (column.field === 'profileImage') {
+
+                        <img
+                          [src]="emp.profileImage"
+                          width="40"
+                          height="40"
+                          class="rounded-circle"
+                          alt="Employee"
+                        />
+
+                      }
+
+                      <!-- Employee Status -->
+                      @else if (column.field === 'isActive') {
+
+                        <p-tag
+                          [value]="emp.isActive ? 'Active' : 'Inactive'"
+                          [severity]="emp.isActive ? 'success' : 'danger'"
+                        />
+
+                      }
+
+                      <!-- Employee Code -->
+                      @else if (column.field === 'employeeCode') {
+
+                        <a
+                          class="employeesDetails"
+                          (click)="onEmployeeDetails(emp.employeeCode)"
+                        >
+                          {{ emp.employeeCode }}
+                        </a>
+
+                      }
+
+                      <!-- Other Employee Fields -->
+                      @else {
+
+                        {{ formatEmployeeValue(emp, column.field) }}
+
+                      }
+
+                    </td>
+
+                  }
+
+                  <!-- Action Buttons -->
+                  <td>
+
+                    <div class="employee-actions d-flex align-items-center gap-2">
+
+                      <!-- Edit Employee -->
+                      <p-button
+                        icon="pi pi-pencil"
+                        severity="info"
+                        [text]="true"
+                        aria-label="Edit employee"
+                        (onClick)="onSpecificEmpEdited(emp.employeeCode)"
+                      />
+
+                      <!-- Delete Employee -->
+                      <p-button
+                        icon="pi pi-trash"
+                        severity="danger"
+                        [text]="true"
+                        aria-label="Delete employee"
+                        (onClick)="onEmployeeDeleteRequested(emp)"
+                      />
+
+                    </div>
+
+                  </td>
+
+                </tr>
+
+              </ng-template>
+
+            </p-table>
+
+          </div>
+
+        </p-card>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ===================================== -->
+<!-- Employee Details Dialog -->
+<!-- ===================================== -->
+
+<p-dialog
+  header="Employee Full Details"
+  [(visible)]="displayEmployeeDialog"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [closable]="true"
+  [style]="{ width: '650px' }"
+  [breakpoints]="{
+    '960px': '75vw',
+    '640px': '95vw'
+  }"
+  (onHide)="selectedEmployee.set(null)"
+>
+
+  <app-employee-details
+    [employee]="selectedEmployee()"
+  />
+
+</p-dialog>
+
+
+<!-- ===================================== -->
+<!-- Employee Delete Confirmation Dialog -->
+<!-- ===================================== -->
+
+<p-dialog
+  header="Delete Employee"
+  [(visible)]="displayDeleteEmployeeDialog"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [closable]="!isDeletingEmployee()"
+  [style]="{ width: '450px' }"
+  (onHide)="onDeleteEmployeeDialogClosed()"
+>
+
+  @if (employeePendingDeletion(); as employee) {
+
+    <p>
+      Are you sure you want to delete
+
+      <strong>
+        {{ employee.firstName }} {{ employee.lastName }}
+      </strong>
+
+      ({{ employee.employeeCode }})?
+
+      This action cannot be undone.
+    </p>
+
+  }
+
+  @if (deleteEmployeeError()) {
+
+    <p class="text-danger" role="alert">
+      {{ deleteEmployeeError() }}
+    </p>
+
+  }
+
+  <div class="d-flex justify-content-end gap-2">
+
+    <p-button
+      label="Cancel"
+      severity="secondary"
+      [outlined]="true"
+      [disabled]="isDeletingEmployee()"
+      (onClick)="displayDeleteEmployeeDialog = false"
+    />
+
+    <p-button
+      label="Delete"
+      icon="pi pi-trash"
+      severity="danger"
+      [loading]="isDeletingEmployee()"
+      [disabled]="!employeePendingDeletion() || isDeletingEmployee()"
+      (onClick)="onEmployeeDeleteConfirmed()"
+    />
+
+  </div>
+
+</p-dialog>
+
+
+<!-- ===================================== -->
+<!-- Employee Create Dialog -->
+<!-- ===================================== -->
+
+<p-dialog
+  header="Employee Full Details"
+  [(visible)]="displayCreateEmployeeDialog"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [closable]="true"
+  [style]="{ width: '650px' }"
+  [breakpoints]="{
+    '960px': '75vw',
+    '640px': '95vw'
+  }"
+  (onHide)="selectEmployeeCreated.set(null)"
+>
+
+  <app-employee-create
+    (employeeCreated)="onEmployeeCreated()"
+  />
+
+</p-dialog>
+
+
+<!-- ===================================== -->
+<!-- Employee Edit Dialog -->
+<!-- ===================================== -->
+
+<p-dialog
+  header="Employee Full Details"
+  [(visible)]="diplayEditEmployeeDialog"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [closable]="true"
+  [style]="{ width: '650px' }"
+  [breakpoints]="{
+    '960px': '75vw',
+    '640px': '95vw'
+  }"
+  (onHide)="selectEmployeeEdited.set(null)"
+>
+
+  <app-employee-edit
+    [employeesData]="selectEmployeeEdited()"
+    (closeCard)="onEmployeeEditSaved()"
+  />
+
+</p-dialog>

@@ -1,0 +1,94 @@
+<main class="register-page">
+  <p-card class="register-card">
+    <ng-template #title>Create your account</ng-template>
+    <ng-template #subtitle>Enter your details to get started.</ng-template>
+
+    <form class="register-form" [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
+      <div class="register-fields">
+        <div class="register-field">
+          <label for="register-first-name">First name</label>
+          <input pInputText id="register-first-name" autocomplete="given-name" formControlName="firstName" />
+          @if (registerForm.controls.firstName.invalid && (registerForm.controls.firstName.touched || submitted())) {
+            <small class="field-error">Enter your first name.</small>
+          }
+        </div>
+
+        <div class="register-field">
+          <label for="register-last-name">Last name</label>
+          <input pInputText id="register-last-name" autocomplete="family-name" formControlName="lastName" />
+          @if (registerForm.controls.lastName.invalid && (registerForm.controls.lastName.touched || submitted())) {
+            <small class="field-error">Enter your last name.</small>
+          }
+        </div>
+
+        <div class="register-field register-field--wide">
+          <label for="register-email">Email address</label>
+          <input pInputText id="register-email" type="email" autocomplete="email" formControlName="email" />
+          @if (registerForm.controls.email.invalid && (registerForm.controls.email.touched || submitted())) {
+            <small class="field-error">Enter a valid email address.</small>
+          }
+        </div>
+
+        <div class="register-field register-field--wide">
+          <label for="register-mobile">Mobile number</label>
+          <input pInputText id="register-mobile" type="tel" autocomplete="tel" formControlName="mobileNumber" />
+          @if (registerForm.controls.mobileNumber.invalid && (registerForm.controls.mobileNumber.touched || submitted())) {
+            <small class="field-error">Enter a valid mobile number.</small>
+          }
+        </div>
+
+        <div class="register-field">
+          <label for="register-password">Password</label>
+          <input pInputText id="register-password" type="password" autocomplete="new-password" formControlName="password" />
+          @if (registerForm.controls.password.invalid && (registerForm.controls.password.touched || submitted())) {
+            <small class="field-error">Use a password with at least 8 characters.</small>
+          }
+        </div>
+
+        <div class="register-field">
+          <label for="register-confirm-password">Confirm password</label>
+          <input pInputText id="register-confirm-password" type="password" autocomplete="new-password" formControlName="confirmPassword" />
+          @if (registerForm.controls.confirmPassword.invalid && (registerForm.controls.confirmPassword.touched || submitted())) {
+            <small class="field-error">Confirm your password.</small>
+          } @else if (registerForm.hasError('passwordMismatch') && (registerForm.controls.confirmPassword.touched || submitted())) {
+            <small class="field-error">Passwords do not match.</small>
+          }
+        </div>
+
+        <div class="register-field register-field--wide">
+          <label for="register-role">Role</label>
+          <p-select
+            inputId="register-role"
+            formControlName="role"
+            [options]="roleOptions"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Select a role"
+            styleClass="register-role-select"
+          />
+        </div>
+      </div>
+
+      @if (registrationMessage(); as message) {
+        <p class="register-status" role="status">{{ message }}</p>
+      }
+      @if (registrationError(); as message) {
+        <p class="register-error" role="alert">{{ message }}</p>
+      }
+
+      <p-button
+        type="submit"
+        label="Create account"
+        icon="pi pi-user-plus"
+        [loading]="isSubmitting()"
+        [disabled]="isSubmitting()"
+        styleClass="register-submit"
+      />
+    </form>
+
+    <p class="login-prompt">
+      Already have an account?
+      <a routerLink="/login">Go to login</a>
+    </p>
+  </p-card>
+</main>

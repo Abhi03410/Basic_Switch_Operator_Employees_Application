@@ -1,0 +1,35 @@
+export interface EmployeeRecord {
+  id: string;
+  firstName: string;
+  lastName: string;
+  dateOfBirth?: string;
+  gender?: string;
+  profileImage: string;
+  email: string;
+  mobileNumber: string;
+  alternateMobileNumber?: string;
+  address?: string;
+  city?: string;
+  state?: string;
+  country?: string;
+  pinCode?: string;
+  employeeCode: string;
+  department: string;
+  designation: string;
+  employmentType?: string;
+  joiningDate?: string;
+  experience?: number;
+  reportingManager?: string;
+  salary?: number;
+  bankAccountNumber?: string;
+  bankName?: string;
+  ifscCode?: string;
+  qualification?: string;
+  university?: string;
+  emergencyContactName?: string;
+  emergencyContactNumber?: string;
+  emergencyContactRelation?: string;
+  isActive: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+}

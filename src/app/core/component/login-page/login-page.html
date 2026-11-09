@@ -1,0 +1,58 @@
+<main class="login-page">
+  <p-card class="login-card">
+    <ng-template #title>Welcome back</ng-template>
+    <ng-template #subtitle>Sign in to continue to your account.</ng-template>
+
+    <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+      <div class="login-field">
+        <label for="login-email">Email address</label>
+        <input pInputText id="login-email" type="email" autocomplete="email" formControlName="email" />
+        @if (loginForm.controls.email.invalid && (loginForm.controls.email.touched || submitted())) {
+          <small class="field-error">Enter a valid email address.</small>
+        }
+      </div>
+
+      <div class="login-field">
+        <label for="login-password">Password</label>
+        <input pInputText id="login-password" type="password" autocomplete="current-password" formControlName="password" />
+        @if (loginForm.controls.password.invalid && (loginForm.controls.password.touched || submitted())) {
+          <small class="field-error">Enter your password.</small>
+        }
+      </div>
+
+      <div class="login-field">
+        <label for="login-captcha">Captcha</label>
+        <div class="captcha-display">
+          <span class="captcha-code" role="img" aria-label="CAPTCHA code">{{ captchaChallenge() }}</span>
+          <button
+            type="button"
+            class="captcha-refresh"
+            aria-label="Generate a new CAPTCHA code"
+            (click)="refreshCaptcha()"
+          >
+            <i class="pi pi-refresh" aria-hidden="true"></i>
+            <span>Refresh</span>
+          </button>
+        </div>
+        <input pInputText id="login-captcha" autocomplete="off" autocapitalize="characters" formControlName="captcha" />
+        <small class="field-hint">Enter the letters and numbers shown above. This demo CAPTCHA is client-side only.</small>
+        @if (loginForm.controls.captcha.hasError('required') && (loginForm.controls.captcha.touched || submitted())) {
+          <small class="field-error">Enter the CAPTCHA code.</small>
+        } @else if (loginForm.controls.captcha.hasError('captchaMismatch') && (loginForm.controls.captcha.touched || submitted())) {
+          <small class="field-error">The CAPTCHA code does not match.</small>
+        }
+      </div>
+
+      @if (loginMessage(); as message) {
+        <p class="login-status" role="alert">{{ message }}</p>
+      }
+
+      <p-button type="submit" label="Sign in" icon="pi pi-sign-in" styleClass="login-submit" />
+    </form>
+
+    <p class="register-prompt">
+      Don't have an account?
+      <a routerLink="/register">Create an account</a>
+    </p>
+  </p-card>
+</main>

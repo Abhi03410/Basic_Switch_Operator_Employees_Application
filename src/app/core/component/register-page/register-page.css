@@ -1,0 +1,91 @@
+.register-page {
+  align-items: center;
+  background:
+    radial-gradient(ellipse at top left, rgb(99 102 241 / 13%), transparent 48%),
+    var(--p-surface-100);
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+}
+
+.register-card {
+  max-width: 42rem;
+  width: 100%;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.register-fields {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.register-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.register-field--wide {
+  grid-column: 1 / -1;
+}
+
+.register-field input,
+.register-field p-select {
+  width: 100%;
+}
+
+.field-error {
+  color: var(--p-red-600);
+}
+
+.register-status {
+  background: var(--p-blue-50);
+  border-radius: var(--p-border-radius);
+  color: var(--p-blue-800);
+  margin: 0;
+  padding: 0.75rem 1rem;
+}
+
+.register-error {
+  color: var(--p-red-600);
+  margin: 0;
+}
+
+.register-submit {
+  width: 100%;
+}
+
+.login-prompt {
+  color: var(--p-text-muted-color);
+  margin: 1.5rem 0 0;
+  text-align: center;
+}
+
+.login-prompt a {
+  color: var(--p-primary-color);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.login-prompt a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 560px) {
+  .register-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .register-field--wide {
+    grid-column: auto;
+  }
+}

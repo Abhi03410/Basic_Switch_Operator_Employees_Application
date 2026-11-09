@@ -1,0 +1,29 @@
+.employee-filter-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+}
+
+.employee-filter-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.table-container {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.employeesDetails{
+  cursor: pointer;
+  text-decoration: none;
+  color:aliceblue;
+}
+
+a.employeesDetails:hover{
+  color:blue;
+}
+
+

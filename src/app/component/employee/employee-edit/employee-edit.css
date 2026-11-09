@@ -1,0 +1,60 @@
+.employee-edit-card {
+  display: block;
+}
+
+.employee-edit-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.25rem 0;
+}
+
+.employee-edit-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.employee-edit-header p {
+  margin: 0.25rem 0 0;
+  color: var(--p-text-muted-color);
+}
+
+.employee-edit-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  padding: 0.5rem 0;
+}
+
+.employee-edit-field {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.employee-edit-field label {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.employee-edit-field input {
+  width: 100%;
+}
+
+.employee-edit-empty {
+  margin: 0;
+  padding: 1rem 0;
+}
+
+@media (max-width: 640px) {
+  .employee-edit-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .employee-edit-header {
+    align-items: flex-start;
+    padding-inline: 0.75rem;
+  }
+}

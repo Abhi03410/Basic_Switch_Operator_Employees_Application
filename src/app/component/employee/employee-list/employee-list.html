@@ -1,0 +1,226 @@
+<!-- ===================================== -->
+<!-- Employee Analytics Dashboard -->
+<!-- ===================================== -->
+
+<div class="employee-analytics mt-4 mb-4">
+
+  <div class="analytics-heading mb-3">
+    <div class="analytics-heading-copy">
+      <h4 class="mb-1">Employee Analytics</h4>
+      <p class="text-secondary mb-0">
+        Overview of employee distribution and status
+      </p>
+      @if (!isLoading() && !errorMessage()) {
+        <p class="text-secondary mb-0">
+          Showing analytics for {{ chartEmployeeCount() }} of {{ totalEmployeeCount() }} employees
+        </p>
+      }
+    </div>
+
+    @if (!isLoading() && !errorMessage() && totalEmployeeCount() > 0) {
+      <div class="employee-selector">
+        <label for="analytics-employee">Filter charts by employee</label>
+        <p-select
+          inputId="analytics-employee"
+          [options]="employeeOptions()"
+          optionLabel="employeeName"
+          placeholder="All employees"
+          [showClear]="true"
+          [filter]="true"
+          [ngModel]="selectedEmployee()"
+          styleClass="employee-select"
+          panelStyleClass="employee-select-panel"
+          (ngModelChange)="selectedEmployee.set($event)"
+        >
+          <ng-template #selectedItem let-employee>
+            @if (employee) {
+              <span class="employee-option">
+                @if (employee.profileImage) {
+                  <img
+                    [src]="employee.profileImage"
+                    alt=""
+                    width="36"
+                    height="36"
+                    loading="lazy"
+                  />
+                } @else {
+                  <span class="employee-avatar-placeholder" aria-hidden="true">
+                    <i class="pi pi-user"></i>
+                  </span>
+                }
+                <span class="employeeName">{{ employee.employeeName }}</span>
+              </span>
+            }
+          </ng-template>
+          <ng-template #item let-employee>
+            <span class="employee-option">
+              @if (employee.profileImage) {
+                <img
+                  [src]="employee.profileImage"
+                  alt=""
+                  width="36"
+                  height="36"
+                  loading="lazy"
+                />
+              } @else {
+                <span class="employee-avatar-placeholder" aria-hidden="true">
+                  <i class="pi pi-user"></i>
+                </span>
+              }
+              <span class="employeeName">{{ employee.employeeName }}</span>
+            </span>
+          </ng-template>
+        </p-select>
+        @if (selectedEmployee(); as employee) {
+          <div class="selected-employee-preview">
+            @if (employee.profileImage) {
+              <img
+                [src]="employee.profileImage"
+                [alt]="employee.employeeName"
+                width="72"
+                height="72"
+                class="empDetails"
+                (click)="onNavigateEmpDetails(employee.id)"
+              />
+            } @else {
+              <span class="selected-employee-placeholder" aria-hidden="true">
+                <i class="pi pi-user"></i>
+              </span>
+            }
+            <div>
+              <strong><a class="empDetails" (click)="onNavigateEmpDetails(employee.id)">{{ employee.employeeName }}</a></strong>
+              <span>Selected employee</span>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+  @if (isLoading()) {
+    <p role="status">Loading employee analytics...</p>
+  } @else if (errorMessage()) {
+    <p class="text-danger" role="alert">{{ errorMessage() }}</p>
+  } @else if (totalEmployeeCount() === 0) {
+    <p>No employee records are available for analytics.</p>
+  } @else {
+    <!-- First Row -->
+    <div class="row g-3 mb-3">
+
+      <!-- Department Chart -->
+      <div class="col-12 col-lg-8">
+
+        <p-card class="analytics-card">
+
+          <ng-template #title>
+            Employees by Department
+          </ng-template>
+
+          <div class="chart-container">
+            <p-chart
+              type="bar"
+              [data]="departmentChartData()"
+              [options]="barChartOptions"
+            />
+          </div>
+
+        </p-card>
+
+      </div>
+
+      <!-- Active / Inactive Chart -->
+      <div class="col-12 col-lg-4">
+
+        <p-card class="analytics-card">
+
+          <ng-template #title>
+            Employee Status
+          </ng-template>
+
+          <div class="chart-container">
+            <p-chart
+              type="doughnut"
+              [data]="employeeStatusChartData()"
+              [options]="doughnutChartOptions"
+            />
+          </div>
+
+        </p-card>
+
+      </div>
+
+    </div>
+
+
+    <!-- Second Row -->
+    <div class="row g-3">
+
+      <!-- Employment Type Chart -->
+      <div class="col-12 col-lg-5">
+
+        <p-card class="analytics-card">
+
+          <ng-template #title>
+            Employment Type
+          </ng-template>
+
+          <div class="chart-container">
+            <p-chart
+              type="pie"
+              [data]="employmentTypeChartData()"
+              [options]="pieChartOptions"
+            />
+          </div>
+
+        </p-card>
+
+      </div>
+
+
+      <!-- Designation Chart -->
+      <div class="col-12 col-lg-7">
+
+        <p-card class="analytics-card">
+
+          <ng-template #title>
+            Employees by Designation
+          </ng-template>
+
+          <div class="chart-container designation-chart">
+            <p-chart
+              type="bar"
+              [data]="designationChartData()"
+              [options]="designationChartOptions"
+            />
+          </div>
+
+        </p-card>
+
+      </div>
+    </div>
+  }
+
+</div>
+
+<!-- ===================================== -->
+<!-- Employee Details Dialog -->
+<!-- ===================================== -->
+
+<p-dialog
+  header="Employee Full Details"
+  [(visible)]="displayEmployeeDetailsDialog"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [closable]="true"
+  [style]="{ width: '650px' }"
+  [breakpoints]="{
+    '960px': '75vw',
+    '640px': '95vw'
+  }"
+  (onHide)="selectedEmployeeDetails.set(null)"
+>
+
+  <app-employee-details
+    [employee]="selectedEmployeeDetails()"
+  />
